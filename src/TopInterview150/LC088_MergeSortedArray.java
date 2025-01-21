@@ -41,7 +41,7 @@ public class LC088_MergeSortedArray {
         int n = 3;
 
         merge(nums1, m, nums2, n);
-        System.out.println(Arrays.toString(nums1));
+        System.out.println(Arrays.toString(nums1)); // [1,2,2,3,5,6]
     }
 
     public static void merge(int[] nums1, int m, int[] nums2, int n) {
