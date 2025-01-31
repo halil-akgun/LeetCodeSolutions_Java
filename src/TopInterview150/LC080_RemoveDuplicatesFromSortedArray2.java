@@ -1,7 +1,5 @@
 package TopInterview150;
 
-import java.util.Arrays;
-
 /*
 Given an integer array nums sorted in non-decreasing order, remove some duplicates in-place such that
 each unique element appears at most twice. The relative order of the elements should be kept the same.
@@ -41,32 +39,27 @@ It does not matter what you leave beyond the returned k (hence they are undersco
  */
 public class LC080_RemoveDuplicatesFromSortedArray2 {
     public static void main(String[] args) {
-//        System.out.println(removeDuplicates(new int[]{1, 1, 1, 2, 2, 3})); // 5
+        System.out.println(removeDuplicates(new int[]{1, 1, 1, 2, 2, 3})); // 5
         System.out.println(removeDuplicates(new int[]{0, 0, 1, 1, 1, 1, 2, 3, 3})); // 7
     }
 
     public static int removeDuplicates(int[] nums) {
         int count = 1;
-        int idx = -1;
-        boolean a = false;
-        System.out.println(Arrays.toString(nums));
+        int idx = 1;
+        boolean seenTwice = false;
         for (int i = 1; i < nums.length; i++) {
             if (nums[i - 1] == nums[i]) {
-                if (a) {
-                    idx = i;
-                    a = false;
-                } else if (idx == -1) {
-                    a = true;
+                if (!seenTwice) {
+                    count++;
+                    nums[idx++] = nums[i];
+                    seenTwice = true;
                 }
-            } else if (idx != -1) {
-                count++;
-                nums[idx] = nums[i];
-                idx = -1;
             } else {
-                a = false;
+                count++;
+                nums[idx++] = nums[i];
+                seenTwice = false;
             }
         }
-        System.out.println(Arrays.toString(nums));
         return nums.length == 0 ? 0 : count;
     }
 }
