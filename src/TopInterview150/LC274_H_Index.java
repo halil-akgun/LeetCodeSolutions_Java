@@ -1,5 +1,7 @@
 package TopInterview150;
 
+import java.util.Arrays;
+
 /*
 Given an array of integers citations where citations[i] is the number of citations a researcher received
 for their ith paper, return the researcher's h-index.
@@ -26,6 +28,29 @@ public class LC274_H_Index {
     }
 
     public static int hIndex(int[] citations) {
+        // way 1
+        Arrays.sort(citations);
+        int citationCount;
+        int hIndex = 0;
+        for (int i = citations.length - 1; i >= 0; i--) {
+            citationCount = citations[i];
+            if (citationCount > hIndex) {
+                hIndex++;
+            } else {
+                break;
+            }
+        }
+        return hIndex;
 
+        // way 2
+//        Arrays.sort(citations);
+//        int n = citations.length;
+//        int i = 0;
+//
+//        while (i < n && citations[n - 1 - i] > i) {
+//            i++;
+//        }
+//
+//        return i;
     }
 }
