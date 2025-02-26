@@ -48,9 +48,14 @@ public class LC167_TwoSumII_InputArrayIsSorted {
             int sum = numbers[left] + numbers[right];
 
             if (sum == target)
-                return new int[]{left+1, right+1};
-            else if (sum)
+                return new int[]{left + 1, right + 1};
+            else if (sum > target)
+                right--;
+            else
+                left++;
         }
+
+        return new int[]{-1, -1};
     }
 
     private static int[] helperMethod(int[] numbers, int target, int index1, int index2) {
