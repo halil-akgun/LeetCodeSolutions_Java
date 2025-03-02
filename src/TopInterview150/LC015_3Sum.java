@@ -60,7 +60,6 @@ public class LC015_3Sum {
 
     private static void helperMethod(int i, int j, int k) {
         int min, mid, max;
-
         if (i < j) {
             if (i < k) {
                 min = i;
