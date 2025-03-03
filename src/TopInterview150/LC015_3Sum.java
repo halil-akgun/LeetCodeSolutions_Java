@@ -1,6 +1,7 @@
 package TopInterview150;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -34,23 +35,54 @@ public class LC015_3Sum {
         System.out.println(threeSum(new int[]{-1, 0, 1, 2, -1, -4})); // [[-1,-1,2],[-1,0,1]]
         System.out.println(threeSum(new int[]{0, 1, 1})); // []
         System.out.println(threeSum(new int[]{0, 0, 0})); // [[0,0,0]]
-        System.out.println(threeSum(new int[]{-1,0,1})); // [[-1,0,1]]
+        System.out.println(threeSum(new int[]{-1, 0, 1})); // [[-1,0,1]]
     }
 
-    static List<List<Integer>> result = new ArrayList<>();
-    static StringBuilder a = new StringBuilder();
+//    static List<List<Integer>> result = new ArrayList<>();
+//    static StringBuilder a = new StringBuilder();
 
     public static List<List<Integer>> threeSum(int[] nums) {
-        result.clear();
-        a = new StringBuilder();
 
+        // way 1
+//        result.clear();
+//        a = new StringBuilder();
+//
+//        for (int i = 0; i < nums.length - 2; i++) {
+//            for (int j = i + 1; j < nums.length - 1; j++) {
+//                for (int k = j + 1; k < nums.length; k++) {
+//                    if (nums[i] + nums[j] + nums[k] == 0) {
+//                        System.out.println("*************");
+//                        helperMethod(nums[i], nums[j], nums[k]);
+//                    }
+//                }
+//            }
+//        }
+//
+//        return result;
+
+        // way 2
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
         for (int i = 0; i < nums.length - 2; i++) {
-            for (int j = i + 1; j < nums.length - 1; j++) {
-                for (int k = j + 1; k < nums.length; k++) {
-                    if (nums[i] + nums[j] + nums[k] == 0) {
-                        System.out.println("*************");
-                        helperMethod(nums[i], nums[j], nums[k]);
-                    }
+
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            int left = i + 1, right = nums.length - 1;
+
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum == 0) {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+
+                    while (left < right && nums[left] == nums[left + 1]) left++;
+                    while (left < right && nums[right] == nums[right - 1]) right--;
+
+                    left++;
+                    right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    right--;
                 }
             }
         }
@@ -58,47 +90,47 @@ public class LC015_3Sum {
         return result;
     }
 
-    private static void helperMethod(int i, int j, int k) {
-        int min, mid, max;
-        if (i < j) {
-            if (i < k) {
-                min = i;
-                if (j < k) {
-                    mid = j;
-                    max = k;
-                } else {
-                    mid = k;
-                    max = j;
-                }
-            } else {
-                min = k;
-                mid = i;
-                max = j;
-            }
-        } else {
-            if (j < k) {
-                min = j;
-                if (i < k) {
-                    mid = i;
-                    max = k;
-                } else {
-                    mid = k;
-                    max = i;
-                }
-            } else {
-                min = k;
-                mid = j;
-                max = i;
-            }
-        }
-
-        a.append("_").append(min).append(",").append(mid).append(",").append(max).append("_");
-        if (a.indexOf("_" + min + "," + mid + "," + max + "_") != a.lastIndexOf("_" + min + "," + mid + "," + max + "_"))
-            return;
-
-        result.add(new ArrayList<>());
-        result.getLast().add(min);
-        result.getLast().add(mid);
-        result.getLast().add(max);
-    }
+//    private static void helperMethod(int i, int j, int k) {
+//        int min, mid, max;
+//        if (i < j) {
+//            if (i < k) {
+//                min = i;
+//                if (j < k) {
+//                    mid = j;
+//                    max = k;
+//                } else {
+//                    mid = k;
+//                    max = j;
+//                }
+//            } else {
+//                min = k;
+//                mid = i;
+//                max = j;
+//            }
+//        } else {
+//            if (j < k) {
+//                min = j;
+//                if (i < k) {
+//                    mid = i;
+//                    max = k;
+//                } else {
+//                    mid = k;
+//                    max = i;
+//                }
+//            } else {
+//                min = k;
+//                mid = j;
+//                max = i;
+//            }
+//        }
+//
+//        a.append("_").append(min).append(",").append(mid).append(",").append(max).append("_");
+//        if (a.indexOf("_" + min + "," + mid + "," + max + "_") != a.lastIndexOf("_" + min + "," + mid + "," + max + "_"))
+//            return;
+//
+//        result.add(new ArrayList<>());
+//        result.getLast().add(min);
+//        result.getLast().add(mid);
+//        result.getLast().add(max);
+//    }
 }
