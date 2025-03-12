@@ -39,6 +39,5 @@ public class LC048_RotateImage {
     }
 
     public static void rotate(int[][] matrix) {
-
     }
 }
