@@ -39,5 +39,47 @@ public class LC048_RotateImage {
     }
 
     public static void rotate(int[][] matrix) {
+        // way 1
+//        int a = matrix.length / 2, border = 0, b = matrix.length - 1 - border, temp;
+//        while (a-- > 0) {
+//            for (int tour = 0; tour < b; tour++) {
+//                temp = matrix[border][matrix.length - 1 - border];
+//                for (int i = matrix.length - border - 2; i >= border; i--) {
+//                    matrix[border][i + 1] = matrix[border][i];
+//                }
+//                for (int i = border + 1; i < matrix.length - border; i++) {
+//                    matrix[i - 1][border] = matrix[i][border];
+//                }
+//                for (int i = border + 1; i < matrix.length - border; i++) {
+//                    matrix[matrix.length - 1 - border][i - 1] = matrix[matrix.length - 1 - border][i];
+//                }
+//                for (int i = matrix.length - border - 2; i >= border; i--) {
+//                    matrix[i + 1][matrix.length - 1 - border] = matrix[i][matrix.length - 1 - border];
+//                }
+//                matrix[border + 1][matrix.length - 1 - border] = temp;
+//            }
+//            b -= 2;
+//            border++;
+//        }
+
+        // way 2 (faster)
+        // 1. Transpose the matrix (convert rows to columns)
+        int n = matrix.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+
+        // 2. Reverse each row
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][n - 1 - j];
+                matrix[i][n - 1 - j] = temp;
+            }
+        }
     }
 }
