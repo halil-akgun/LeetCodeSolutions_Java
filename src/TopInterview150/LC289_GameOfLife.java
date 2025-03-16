@@ -42,6 +42,33 @@ public class LC289_GameOfLife {
     }
 
     public static void gameOfLife(int[][] board) {
+        int[][] boardCopy = new int[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++)
+            boardCopy[i] = board[i].clone();
 
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                int liveNeighbors = countLiveNeighbors(boardCopy, i, j);
+                if (liveNeighbors < 2 || liveNeighbors > 3)
+                    board[i][j] = 0;
+                else if (liveNeighbors == 3)
+                    board[i][j] = 1;
+            }
+        }
+    }
+
+    private static int countLiveNeighbors(int[][] board, int i, int j) {
+        int liveNeighbors = 0;
+        for (int k = i - 1; k <= i + 1; k++) {
+            for (int l = j - 1; l <= j + 1; l++) {
+                if (k == i && l == j)
+                    continue;
+                if (k < 0 || l < 0 || k >= board.length || l >= board[0].length)
+                    continue;
+                if (board[k][l] == 1)
+                    liveNeighbors++;
+            }
+        }
+        return liveNeighbors;
     }
 }
