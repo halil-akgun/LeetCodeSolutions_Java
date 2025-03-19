@@ -49,7 +49,6 @@ public class LC383_RansomNote {
         Arrays.sort(r);
         Arrays.sort(m);
         for (int i = 0; i < r.length; i++) {
-
         }
     }
 }
