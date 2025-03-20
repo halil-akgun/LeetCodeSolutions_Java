@@ -29,6 +29,7 @@ public class LC383_RansomNote {
     }
 
     public static boolean canConstruct(String ransomNote, String magazine) {
+        // way 1
 //        String r = ransomNote;
 //        String m = magazine;
 //
@@ -44,12 +45,27 @@ public class LC383_RansomNote {
 //        return true;
 
         // way 2
-        char[] r = ransomNote.toCharArray();
-        char[] m = magazine.toCharArray();
-        Arrays.sort(r);
-        Arrays.sort(m);
-        for (int i = 0; i < r.length; i++) {
+//        char[] r = ransomNote.toCharArray();
+//        char[] m = magazine.toCharArray();
+//        Arrays.sort(r);
+//        Arrays.sort(m);
+//        int i = 0, j = 0;
+//        while (i < r.length && j < m.length) {
+//            if (r[i] < m[j])
+//                break;
+//            if (r[i] == m[j])
+//                i++;
+//            j++;
+//        }
+//        return i == r.length;
 
+        // way 3
+        int[] alphabet = new int[26];
+        for (char c : ransomNote.toCharArray()) {
+            int i = magazine.indexOf(c, alphabet[c % 26]);
+            if (i == -1) return false;
+            alphabet[c % 26] = i + 1;
         }
+        return true;
     }
 }
