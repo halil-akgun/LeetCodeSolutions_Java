@@ -1,6 +1,5 @@
 package TopInterview150;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,10 +57,11 @@ public class LC205_IsomorphicStrings {
         char[] lettersOfS = s.toCharArray();
         char[] lettersOfT = t.toCharArray();
         Map<Character, Character> map = new HashMap<>();
-        return !(!extracted(lettersOfS, map, lettersOfT) || !extracted(lettersOfT, map, lettersOfS));
+        return checkMapping(lettersOfS, map, lettersOfT) &&
+                checkMapping(lettersOfT, map, lettersOfS);
     }
 
-    private static boolean extracted(char[] lettersOfS, Map<Character, Character> map, char[] lettersOfT) {
+    private static boolean checkMapping(char[] lettersOfS, Map<Character, Character> map, char[] lettersOfT) {
         map.clear();
         for (int i = 0; i < lettersOfS.length; i++) {
             Character ch = map.get(lettersOfS[i]);
