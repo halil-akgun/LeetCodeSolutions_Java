@@ -1,5 +1,6 @@
 package TopInterview150;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -33,10 +34,23 @@ Explanation: The ranges are:
  */
 public class LC228_SummaryRanges {
     public static void main(String[] args) {
-        System.out.println(summaryRanges(new int[]{0,1,2,4,5,7})); // ["0->2","4->5","7"]
-        System.out.println(summaryRanges(new int[]{0,2,3,4,6,8,9})); // ["0","2->4","6","8->9"]
+        System.out.println(summaryRanges(new int[]{0, 1, 2, 4, 5, 7})); // ["0->2","4->5","7"]
+        System.out.println(summaryRanges(new int[]{0, 2, 3, 4, 6, 8, 9})); // ["0","2->4","6","8->9"]
     }
-    public static List<String> summaryRanges(int[] nums) {
 
+    public static List<String> summaryRanges(int[] nums) {
+        if (nums.length == 0) return new ArrayList<>();
+
+        List<String> result = new ArrayList<>();
+        int a = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] - nums[i - 1] != 1) {
+                result.add((nums[a] == nums[i - 1] ? "" : nums[a] + "->") + nums[i - 1]);
+                a = i;
+            }
+        }
+        result.add((nums[a] == nums[nums.length - 1] ? "" : nums[a] + "->") + nums[nums.length - 1]);
+
+        return result;
     }
 }
