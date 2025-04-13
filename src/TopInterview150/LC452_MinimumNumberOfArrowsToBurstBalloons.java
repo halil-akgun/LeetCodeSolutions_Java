@@ -1,5 +1,8 @@
 package TopInterview150;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /*
 There are some spherical balloons taped onto a flat wall that represents the XY-plane. The balloons
 are represented as a 2D integer array points where points[i] = [xstart, xend] denotes a balloon
@@ -36,7 +39,13 @@ public class LC452_MinimumNumberOfArrowsToBurstBalloons {
         System.out.println(findMinArrowShots(new int[][]{{1, 2}, {3, 4}, {5, 6}, {7, 8}})); // 4
         System.out.println(findMinArrowShots(new int[][]{{1, 2}, {2, 3}, {3, 4}, {4, 5}})); // 2
     }
-    public static int findMinArrowShots(int[][] points) {
 
+    public static int findMinArrowShots(int[][] points) {
+        if (points.length == 0) return 0;
+        Arrays.sort(points, Comparator.comparingInt(a -> a[1]));
+        int arrows = 1;
+        for (int i = 1; i < points.length; i++) {
+            if ()
+        }
     }
 }
