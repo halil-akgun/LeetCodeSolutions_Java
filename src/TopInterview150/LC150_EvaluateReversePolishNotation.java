@@ -1,5 +1,9 @@
 package TopInterview150;
 
+import java.util.Map;
+import java.util.Stack;
+import java.util.function.BiFunction;
+
 /*
 You are given an array of strings tokens that represents an arithmetic expression in a Reverse Polish Notation.
 
@@ -41,7 +45,30 @@ public class LC150_EvaluateReversePolishNotation {
         System.out.println(evalRPN(new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"})); // 22
     }
 
-    public static int evalRPN(String[] tokens) {
+    private static final Map<String, BiFunction<Integer, Integer, Integer>> operators = Map.of(
+            "+", Integer::sum,
+            "-", (a, b) -> a - b,
+            "*", (a, b) -> a * b,
+            "/", (a, b) -> {
+                if (b == 0) {
+                    throw new IllegalArgumentException();
+                }
+                return a / b;
+            }
+    );
 
+    public static int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+        for (String token : tokens) {
+            var operator = operators.get(token);
+            if (operator == null) {
+                stack.push(Integer.parseInt(token));
+            } else {
+                int b = stack.pop();
+                int a = stack.pop();
+                stack.add(operator.apply(a, b));
+            }
+        }
+        return stack.pop();
     }
 }
