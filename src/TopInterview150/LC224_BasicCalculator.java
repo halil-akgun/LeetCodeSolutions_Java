@@ -25,6 +25,5 @@ public class LC224_BasicCalculator {
     }
 
     public static int calculate(String s) {
-
     }
 }
