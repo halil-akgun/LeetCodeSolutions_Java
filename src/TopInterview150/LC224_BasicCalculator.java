@@ -21,15 +21,49 @@ Output: 23
  */
 public class LC224_BasicCalculator {
     public static void main(String[] args) {
-//        System.out.println(calculate("1 + 1")); // 2
-//        System.out.println(calculate(" 2-1 + 2 ")); // 3
-//        System.out.println(calculate("(1+(4+5+2)-3)+(6+8)")); // 23
-//        System.out.println(calculate("1-(     -2)")); // 3
-//        System.out.println(calculate("(5-(1+(5)))")); // -1
-        System.out.println(calculate("-(-2)+4")); // 8
+        System.out.println(calculate("1 + 1")); // 2
+        System.out.println(calculate(" 2-1 + 2 ")); // 3
+        System.out.println(calculate("(1+(4+5+2)-3)+(6+8)")); // 23
+        System.out.println(calculate("1-(     -2)")); // 3
+        System.out.println(calculate("(5-(1+(5)))")); // -1
+        System.out.println(calculate("-(-2)+4")); // 6
     }
 
     public static int calculate(String s) {
+        int result = 0;
+        int sign = 1;
+        int number = 0;
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {
+                number = number * 10 + (c - '0');
+            } else if (c == '+') {
+                result += sign * number;
+                number = 0;
+                sign = 1;
+            } else if (c == '-') {
+                result += sign * number;
+                number = 0;
+                sign = -1;
+            } else if (c == '(') {
+                stack.push(result);
+                stack.push(sign);
+                result = 0;
+                sign = 1;
+            } else if (c == ')') {
+                result += sign * number;
+                number = 0;
+                result *= stack.pop(); // sign
+                result += stack.pop(); // result before "("
+            }
+        }
+        result += sign * number;
+        return result;
+    }
+
+    public static int calculate2(String s) { // bad solution
         s = s.replaceAll(" ", "");
         Stack<Integer> openParenthesisStack = new Stack<>();
         for (int i = 0; i < s.length(); i++) {
