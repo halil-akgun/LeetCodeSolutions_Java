@@ -29,20 +29,40 @@ Explanation: There is no cycle in the linked list.
  */
 public class LC141_LinkedListCycle {
     public static void main(String[] args) {
+        ListNode head = new ListNode(3);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(0);
+        head.next.next.next = new ListNode(-4);
+        head.next.next.next.next = head.next;
+        System.out.println(hasCycle(head)); // true
 
+        head = new ListNode(1);
+        head.next = new ListNode(2);
+        head.next.next = head;
+        System.out.println(hasCycle(head)); // true
+
+        head = new ListNode(1);
+        System.out.println(hasCycle(head)); // false
     }
-    public static boolean hasCycle(ListNode head) {
 
+    public static boolean hasCycle(ListNode head) {
+        if (head == null) return false;
+        ListNode slow = head, fast = head.next;
+        while (fast != null && fast.next != null) {
+            if (slow == fast) return true;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return false;
     }
 }
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int x) {
+        val = x;
+        next = null;
+    }
+}
