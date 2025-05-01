@@ -34,9 +34,9 @@ public class LC002_AddTwoNumbers {
     }
 
     public static ListNode2 addTwoNumbers(ListNode2 l1, ListNode2 l2) {
-        ListNode2 dummy = new ListNode2(l1.val + l2.val);
+        ListNode2 dummy = new ListNode2((l1.val + l2.val) % 10);
         ListNode2 current = dummy;
-        int a = 0;
+        int a = (l1.val + l2.val) / 10;
         while (l1.next != null && l2.next != null) {
             l1 = l1.next;
             l2 = l2.next;
@@ -59,6 +59,7 @@ public class LC002_AddTwoNumbers {
             current = current.next;
             a = b / 10;
         }
+        if (a == 1) current.next = new ListNode2(1);
         return dummy;
     }
 }
