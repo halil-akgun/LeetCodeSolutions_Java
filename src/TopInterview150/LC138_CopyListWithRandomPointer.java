@@ -1,5 +1,8 @@
 package TopInterview150;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
 A linked list of length n is given such that each node contains an additional random pointer,
 which could point to any node in the list, or null.
@@ -48,13 +51,32 @@ public class LC138_CopyListWithRandomPointer {
         head.next.next.next = new Node(10);
         head.next.next.random = head.next.next.next.next;
         head.next.next.next.next = new Node(1);
+        head.next.next.next.random = head.next.next;
         head.next.next.next.next.next = null;
         head.next.next.next.next.random = head;
         System.out.println(copyRandomList(head)); // [[7,null],[13,0],[11,4],[10,2],[1,0]]
     }
 
     public static Node copyRandomList(Node head) {
+        if (head == null) return null;
 
+        Map<Node, Node> map = new HashMap<>();
+
+        Node current = head;
+        while (current != null) {
+            map.put(current, new Node(current.val));
+            current = current.next;
+        }
+
+        current = head;
+        while (current != null) {
+            Node copy = map.get(current);
+            copy.next = map.get(current.next);
+            copy.random = map.get(current.random);
+            current = current.next;
+        }
+
+        return map.get(head);
     }
 }
 
@@ -74,10 +96,14 @@ class Node {
         // print all nodes
         StringBuilder sb = new StringBuilder();
         sb.append(val);
+        sb.append(",");
+        sb.append(random == null ? "null" : random.val);
         Node node = next;
         while (node != null) {
-            sb.append("->");
+            sb.append(" -> ");
             sb.append(node.val);
+            sb.append(",");
+            sb.append(node.random == null ? "null" : node.random.val);
             node = node.next;
         }
         return sb.toString();
