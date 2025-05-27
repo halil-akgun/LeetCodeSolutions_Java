@@ -1,5 +1,7 @@
 package TopInterview150;
 
+import java.util.Stack;
+
 /*
 Given the head of a linked list, remove the nth node from the end of the list and return its head.
 
@@ -23,11 +25,52 @@ public class LC019_RemoveNthNodeFromEndOfList {
         head.next.next = new ListNode(3);
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
-        System.out.println(removeNthFromEnd(head, 2));
+        System.out.println(removeNthFromEnd(head, 2)); // [1,2,3,5]
     }
 
     public static ListNode removeNthFromEnd(ListNode head, int n) {
 
+        // way 1
+//        if (head.next == null && n == 1) return null;
+//
+//        ListNode a = new ListNode(1);
+//        a.next = head;
+//        ListNode current = a;
+//        Stack<ListNode> stack = new Stack<>();
+//
+//        while (current != null) {
+//            ListNode temp = current;
+//            stack.push(temp);
+//            temp = temp.next;
+//            current = temp;
+//        }
+//
+//        for (int i = 0; i < n; i++) {
+//            stack.pop();
+//        }
+//
+//        ListNode node = stack.pop();
+//        node.next = node.next.next;
+//        return a.next;
+
+        // way 2
+        if (head.next == null) return null;
+
+        int size = 0;
+        ListNode current = head;
+        while (current != null) {
+            current = current.next;
+            size++;
+        }
+
+        if (size == n) return head.next;
+
+        ListNode a = head;
+        for (int i = 0; i < size - n - 1; i++) {
+            a = a.next;
+        }
+        a.next = a.next.next;
+        return head;
     }
 
     static class ListNode {
