@@ -27,7 +27,27 @@ public class LC086_PartitionList {
     }
 
     public static ListNode partition(ListNode head, int x) {
+        if (head == null || head.next == null) return head;
 
+        ListNode beforeX = new ListNode(0);
+        ListNode afterX = new ListNode(0);
+        ListNode before = beforeX;
+        ListNode after = afterX;
+
+        while (head != null) {
+            if (head.val < x) {
+                before.next = head;
+                before = before.next;
+            } else {
+                after.next = head;
+                after = after.next;
+            }
+            head = head.next;
+        }
+
+        after.next = null;
+        before.next = afterX.next;
+        return beforeX.next;
     }
 
     static class ListNode {
