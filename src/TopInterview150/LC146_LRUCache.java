@@ -56,7 +56,7 @@ public class LC146_LRUCache {
         int[] values;
 
         LRUCache(int capacity) {
-
+            this.capacity = capacity;
         }
 
         public int get(int key) {
