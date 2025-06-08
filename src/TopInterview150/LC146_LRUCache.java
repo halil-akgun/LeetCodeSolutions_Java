@@ -1,5 +1,8 @@
 package TopInterview150;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
 Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
 
@@ -50,21 +53,71 @@ public class LC146_LRUCache {
     }
 
     static class LRUCache {
-        int capacity;
-        int size;
-        int[] keys;
-        int[] values;
+        private final int capacity;
+        private final Map<Integer, Node> cache;
+        private final Node head;
+        private final Node tail;
 
-        LRUCache(int capacity) {
+        public LRUCache(int capacity) {
             this.capacity = capacity;
+            this.cache = new HashMap<>();
+            head = new Node(0, 0); // dummy head
+            tail = new Node(0, 0); // dummy tail
+            head.next = tail;
+            tail.prev = head;
         }
 
-        public int get(int key) {
 
+        public int get(int key) {
+            if (!cache.containsKey(key)) {
+                return -1;
+            }
+            Node node = cache.get(key);
+            remove(node);
+            insertToTail(node);
+            return node.value;
         }
 
         public void put(int key, int value) {
+            if (cache.containsKey(key)) {
+                Node node = cache.get(key);
+                node.value = value;
+                remove(node);
+                insertToTail(node);
+            } else {
+                if (cache.size() >= capacity) {
+                    Node lru = head.next;
+                    remove(lru);
+                    cache.remove(lru.key);
+                }
+                Node newNode = new Node(key, value);
+                insertToTail(newNode);
+                cache.put(key, newNode);
+            }
+        }
 
+        private void remove(Node node) {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+        }
+
+        private void insertToTail(Node node) {
+            node.prev = tail.prev;
+            node.next = tail;
+            tail.prev.next = node;
+            tail.prev = node;
+        }
+    }
+
+    static class Node {
+        int key;
+        int value;
+        Node prev;
+        Node next;
+
+        public Node(int key, int value) {
+            this.key = key;
+            this.value = value;
         }
     }
 }
