@@ -30,7 +30,7 @@ public class LC226_InvertBinaryTree {
     }
 
     public static TreeNode invertTree(TreeNode root) {
-
+        if (root == null) return null;
     }
 
     static class TreeNode {
