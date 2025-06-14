@@ -1,5 +1,8 @@
 package TopInterview150;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /*
 Given the root of a binary tree, invert the tree, and return its root.
 
@@ -31,6 +34,22 @@ public class LC226_InvertBinaryTree {
 
     public static TreeNode invertTree(TreeNode root) {
         if (root == null) return null;
+
+        if (root.left != null || root.right != null) {
+            TreeNode temp = root.right;
+            root.right = root.left;
+            root.left = temp;
+        }
+
+        if (root.left != null) {
+            invertTree(root.left);
+        }
+
+        if (root.right != null) {
+            invertTree(root.right);
+        }
+
+        return root;
     }
 
     static class TreeNode {
@@ -49,6 +68,39 @@ public class LC226_InvertBinaryTree {
             this.val = val;
             this.left = left;
             this.right = right;
+        }
+
+        // toString()
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(this); // Start from the root node
+            sb.append("[");
+
+            while (!queue.isEmpty()) {
+                TreeNode current = queue.poll();
+                if (current == null) {
+                    sb.append("null,");
+                    continue;
+                }
+                sb.append(current.val).append(",");
+
+                // Add left and right children to the queue (even if they are null)
+                queue.offer(current.left);
+                queue.offer(current.right);
+            }
+
+            // Remove trailing "null"s and commas
+            while (sb.length() >= 6 && sb.substring(sb.length() - 5).equals("null,")) {
+                sb.setLength(sb.length() - 5); // Remove the last "null,"
+            }
+            if (sb.charAt(sb.length() - 1) == ',') {
+                sb.setLength(sb.length() - 1); // Remove trailing comma
+            }
+
+            sb.append("]");
+            return sb.toString();
         }
     }
 }
