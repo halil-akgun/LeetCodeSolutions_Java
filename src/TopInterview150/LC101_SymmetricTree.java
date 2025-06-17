@@ -36,6 +36,10 @@ public class LC101_SymmetricTree {
     }
 
     public static boolean isSymmetric(TreeNode root) {
+        return isMirror(root, root);
+    }
+
+    private static boolean isMirror(TreeNode root1, TreeNode root2) {
 
     }
 
